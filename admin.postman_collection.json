@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "e4b471fd-dfa1-49f9-a8e6-515d6e57f9ec",
+		"name": "admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create organization",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Code to Generate the Random IDC organisation name",
+							"var randomnum = _.random(10000000000000, 99999999999999)",
+							"let r_orgname=+'idcorg'+randomnum",
+							"pm.collectionVariables.set('idc_org_name',r_orgname)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"// ------------- SOME STANDARD CHECKS ON RESPONSE RECEIVED ---------------------",
+							"pm.test(\"CreateIDCOrg -Verify_org_created_successfully_viaStatusCode\", () => {",
+							"  pm.expect(pm.response.code).to.eql(201);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_org_created_successfully_viaStatusMessage\", () => {",
+							"  pm.response.to.have.status(\"Created\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_time_tobe_less_than_500ms\", () => {",
+							"  pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_returned_is_json_format\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"DATA\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_data_property\", () => {",
+							"  pm.expect(jsonData).to.have.ownProperty(\"data\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_data_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data).not.eql(null);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_data_property_is_an_object\", () => {",
+							"  pm.expect(jsonData.data).to.be.an(\"object\");",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"",
+							"// ------------- VERIFYING \"CREATEDAT\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_createdAt_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"createdAt\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_createdAt_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.createdAt).not.eql(null);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_createdAt_property_is_an_str\", () => {",
+							"  pm.expect(jsonData.data.createdAt).to.be.an(\"string\");",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"UPDATEDAT\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_updatedAt_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"updatedAt\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_updatedAt_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.updatedAt).not.eql(null);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_updatedAt_property_is_an_str\", () => {",
+							"  pm.expect(jsonData.data.updatedAt).to.be.an(\"string\");",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"DELETEDAT\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_deletedAt_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"deletedAt\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_deletedAt_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.deletedAt).to.eql(null)",
+							"",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"UUID\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_uuid_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"uuid\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_uuid_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.uuid).not.eql(null);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_uuid_property_is_an_str\", () => {",
+							"  pm.expect(jsonData.data.uuid).to.be.an(\"string\");",
+							"});",
+							"",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"NAME\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_name_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"name\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_name_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.name).not.eql(null);",
+							"",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"USERS\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_users_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"users\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_users_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.users).to.eql(null)",
+							"",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"CLUSTERS\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_clusters_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"clusters\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_clusters_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.clusters).to.eql(null)",
+							"",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"SERVICE_INSTANCES\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_serviceInstances_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"serviceInstances\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_serviceInstances_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.serviceInstances).to.eql(null)",
+							"",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"DEFAULT_TENANT\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"CreateIDCOrg -Verify_response_contains_defaultTenant_property\", () => {",
+							"  pm.expect(jsonData.data).to.have.ownProperty(\"defaultTenant\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_defaultTenant_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data.defaultTenant).not.eql(null);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_defaultTenant_property_is_str_type\", () => {",
+							"pm.expect(jsonData.data.defaultTenant).to.be.a(\"string\");",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_defaultTenant_property_is_equal_to_uuid\", () => {",
+							"  pm.expect(jsonData.data.defaultTenant).to.eql(jsonData.data.uuid.toLowerCase());",
+							"});",
+							"// ------------------------------------------------------------------------------"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"{{idc_org_name}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/organization",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List organizations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"// ------------- SOME STANDARD CHECKS ON RESPONSE RECEIVED ---------------------",
+							"pm.test(\"ListIDCOrg -Verify_org_listed_successfully_viaStatusCode\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"ListIDCOrg -Verify_org_listed_successfully_viaStatusMessage\", () => {",
+							"  pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"ListIDCOrg -Verify_response_time_took_less_than_2500ms\", () => {",
+							"  pm.expect(pm.response.responseTime).to.be.below(2500);",
+							"});",
+							"",
+							"pm.test(\"ListIDCOrg -Verify_response_returned_is_json_format\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------------- VERIFYING \"DATA\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE -----",
+							"pm.test(\"ListIDCOrg -Verify_response_contains_data_property\", () => {",
+							"  pm.expect(jsonData).to.have.ownProperty(\"data\");",
+							"});",
+							"",
+							"pm.test(\"ListIDCOrg -Verify_response_data_property_is_not_null\", () => {",
+							"  pm.expect(jsonData.data).not.eql(null);",
+							"});",
+							"",
+							"// pm.test(\"ListIDCOrg -Verify_response_data_property_is_an_object\", () => {",
+							"//   pm.expect(jsonData.data).to.be.an(\"object\");",
+							"// });",
+							"// ------------------------------------------------------------------------------",
+							"",
+							"// ------VERIFYING \"ATTRIBUTE'S\" PROPERTY CREATED_AT IS PRESENT & NOT NULL ------",
+							"pm.test(\"ListIDCOrg -Verify_Response_Contains_Attributes_Property_CreatedAt_ItsValue\", () => {",
+							"  _.each(jsonData.data, (item) => {",
+							"      pm.expect(item).to.haveOwnProperty(\"createdAt\").and.to.not.eql(null)      ",
+							"      });",
+							"       _.each(jsonData.data, (item) => {",
+							"      pm.expect(item).to.haveOwnProperty(\"createdAt\").to.be.an(\"string\")      ",
+							"      });",
+							"      ",
+							"});",
+							"",
+							"// ------VERIFYING \"ATTRIBUTE'S\" PROPERTY UpdatedAt IS PRESENT & NOT NULL ------",
+							"pm.test(\"ListAllStores -Verify_Response_Contains_Attributes_Property_CreatedAt_ItsValue\", () => {",
+							"  _.each(jsonData.data, (item) => {",
+							"      pm.expect(item).to.haveOwnProperty(\"updatedAt\").and.to.not.eql(null)      ",
+							"      });",
+							"      _.each(jsonData.data, (item) => {",
+							"      pm.expect(item).to.haveOwnProperty(\"updatedAt\").to.be.an(\"string\")      ",
+							"      });",
+							"});",
+							"",
+							"// ------VERIFYING \"ATTRIBUTE'S\" PROPERTY deletedAt IS PRESENT & NOT NULL ------",
+							"pm.test(\"ListAllStores -Verify_Response_Contains_Attributes_Property_CreatedAt_ItsValue\", () => {",
+							"  _.each(jsonData.data, (item) => {",
+							"      pm.expect(item).to.haveOwnProperty(\"deletedAt\").and.to.eql(null)      ",
+							"      });",
+							"});",
+							"",
+							"// ------VERIFYING \"ATTRIBUTE'S\" PROPERTY uuid IS PRESENT & NOT NULL ------",
+							"pm.test(\"ListIDCOrg -Verify_Response_Contains_Attributes_Property_uuid_ItsValue\", () => {",
+							"  _.each(jsonData.data, (item) => {",
+							"      pm.expect(item).to.haveOwnProperty(\"uuid\").and.to.not.eql(null)      ",
+							"      });",
+							"",
+							"pm.test(\"Name matches string\", () =>{",
+							"        _.each(jsonData.data, (item) => {",
+							"        pm.expect(item).to.haveOwnProperty(\"uuid\").and.to.be.an(\"string\")    ",
+							"    });",
+							"",
+							"});",
+							"",
+							"// ------------- VERIFYING \"NAME\" PROPERTY IS PRESENT & NOT NULL & ITS TYPE ---",
+							"",
+							"pm.test(\"ListIDCOrg -Verify_Response_Contains_Attributes_Property_uuid_ItsValue\", () => {",
+							"  _.each(jsonData.data, (item) => {",
+							"      pm.expect(item).to.haveOwnProperty(\"uuid\").and.to.not.eql(null)      ",
+							"      });",
+							"",
+							"// // pm.test(\"Name matches string\", () =>{",
+							"// //         _.each(jsonData.data, (item) => {",
+							"// //         pm.expect(item).to.haveOwnProperty(\"uuid\").and.to.be.an(\"string\")    ",
+							"// //     });",
+							"// });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/organization",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"// ------------- SOME STANDARD CHECKS ON RESPONSE RECEIVED ---------------------",
+							"pm.test(\"GetIDCOrg -Verify_org_Get_successfully_viaStatusCode\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"GetIDCOrg -Verify_org_Get_successfully_viaStatusMessage\", () => {",
+							"  pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"GetIDCOrg -Verify_response_time_took_less_than_2000ms\", () => {",
+							"  pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"GetIDCOrg -Verify_response_returned_is_json_format\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');",
+							"});",
+							"// ------------------------------------------------------------------------------",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/organization/oMYjQ2ifdPXdzJcxkibHst",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"organization",
+						"oMYjQ2ifdPXdzJcxkibHst"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invitation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"// ------------- SOME STANDARD CHECKS ON RESPONSE RECEIVED ---------------------",
+							"pm.test(\"InviteOrg -Verify_invitation_sent_successfully_viaStatusCode\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"InviteOrg -Verify_invitation_sent_successfully_viaStatusMessage\", () => {",
+							"  pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"InviteCOrg -Verify_response_time_took_less_than_500ms\", () => {",
+							"  pm.expect(pm.response.responseTime).to.be.below(2400);",
+							"});",
+							"",
+							"pm.test(\"CreateIDCOrg -Verify_response_returned_is_json_format\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');",
+							"});",
+							"// ------------------------------------------------------------------------------"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{admin token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"rinat.burdo@cnvrg.io\",\n    \"orgUUID\": \"VfNkUbCHYZzzJdAuynFEqb\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/admin/invitation",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"invitation"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenType",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "accessToken",
+				"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJENDEzMTQzMzlCOEM4M0NCRTlDQURDQzhBQzU2QjY0MDA2ODRCM0MiLCJ4NXQiOiJMVUV4UXptNHlEeS1uSzNNaXNWclpBQm9TenciLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmM2UwNjFkZi02MTQxLTQ4YmItYjM4OC1kMzZjZDMwOTNhYmUiLCJlbWFpbCI6ImJlZ2FqaXA4OTRAaW50cm9hY2UuY29tIiwibmFtZSI6ImJlZ2EiLCJnaXZlbl9uYW1lIjoiaW50b3JhY2UiLCJmYW1pbHlfbmFtZSI6ImNvbSIsImV4dGVuc2lvbl9vcmdVVUlEIjoiamVycEY1NFIyOVdmZVV0cHUzYjJCRSIsInRpZCI6IjRiMTEzZGM3LTMyMjAtNDhjNC1iNjNkLTUxNTM0YmI5MmE3YyIsInNjcCI6ImlkYy1yZWFkIiwiYXpwIjoiMzgyZjQwMmYtOGIzZC00OGM3LTlkZmQtNjJlMmI5OGM1NGMzIiwidmVyIjoiMS4wIiwiaWF0IjoxNjg3NDI3MTM4LCJhdWQiOiIxMmZlNzM5Yi03ZTcwLTQxZjUtYjc4NS1jYWNkNmFlN2I3NjYiLCJleHAiOjE2ODc0MzA3MzgsImlzcyI6Imh0dHBzOi8vaW50ZWxjbG91ZHN0Zy5iMmNsb2dpbi5jb20vNGIxMTNkYzctMzIyMC00OGM0LWI2M2QtNTE1MzRiYjkyYTdjL3YyLjAvIiwibmJmIjoxNjg3NDI3MTM4fQ.fK_dqaacptDMnGXxPnoAqgcukOq3SV0rk8mEbTDz2DlTnvA2LrakLXXqUsOdFjsESBw6QzYsa-6zsjtF4kdaXlwzZHasLB3OOozP6rzxl59OV-qgzsEBuIPYsG4QGO80AHDUs1iar0_lVw1a-3uknL2FORdNDRhQCIal-hbXmmuDhcOp0eEw2glmcRdU7FcfGLd5R04AI2pcr9d279jUWQFceurMPV7szFxEek-RqgVbU78CqhM7AQSQz41JbXwoxUbY5d8PvH8TQ1PY221HJQb3PLNCfE2GIM7Ti2iTwqE2gttXd1OFr--hty0pqXvLNZfVC1v8Ivaw52sSsbxdFg",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "{{scope}}",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "{{Access Token URL}}",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "{{Auth URL}}",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "{{Callback URL}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{Client ID}}",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code_with_pkce",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "Azure AD B2C Authentication",
+				"type": "string"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://api.stg.intelcloud.cnvrg.io"
+		},
+		{
+			"key": "admin token",
+			"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJENDEzMTQzMzlCOEM4M0NCRTlDQURDQzhBQzU2QjY0MDA2ODRCM0MiLCJ0eXAiOiJKV1QifQ.eyJlbWFpbCI6ImFkbWluQGNudnJnLmlvIiwiaXNzIjoiaHR0cHM6Ly9pbnRlbGNsb3Vkc3RnLmIyY2xvZ2luLmNvbS80YjExM2RjNy0zMjIwLTQ4YzQtYjYzZC01MTUzNGJiOTJhN2MvdjIuMC8iLCJleHAiOjIwMDI1MjkxMTUsIm5iZiI6MTY4NzE2OTExNSwiaWF0IjoxNjg3MTY5MTE1LCJhdWQiOiIxMmZlNzM5Yi03ZTcwLTQxZjUtYjc4NS1jYWNkNmFlN2I3NjYiLCJhenAiOiIzODJmNDAyZi04YjNkLTQ4YzctOWRmZC02MmUyYjk4YzU0YzMifQ.CWS_mpsH_gNw3llWi-MyfOzhKb0rExxj_KZPJL_5tTrALelUWPLA2gU7Px2MjkddtPL-vuwbluvWO4k_zEs816tw9VixHYKKeuYudbSLaK_dgKVMq3jFB89AKtkS-RWYmJy73bizjQG06AQ_RSmXdy-m5Z8vCvlXt0pJC24CPtooNambDrotW_qKMDMT8kIe31jDDnFW5Y_8BYykYCWEhdl8CvBGnRx0sLAM1UQwOpkuN69bx8a-VvQKYfoW9d7rvVkk1RQHY-T6OmUXPXmtfWSWmKbmMpF6J6o8paBDrIa_sgz-IpF8TBzOSxi23ogIYgT53PvlMCcv059GjKI6Eg"
+		},
+		{
+			"key": "Callback URL",
+			"value": "https://console.stg/intelcloud.cnvrg.io/"
+		},
+		{
+			"key": "Auth URL",
+			"value": "https://intelcloudstg.b2clogin.com/intelcloudstg.onmicrosoft.com/b2c_1a_signin_only/oauth2/v2.0/authorize"
+		},
+		{
+			"key": "Access Token URL",
+			"value": "https://intelcloudstg.b2clogin.com/intelcloudstg.onmicrosoft.com/b2c_1a_signin_only/oauth2/v2.0/token"
+		},
+		{
+			"key": "Client ID",
+			"value": "382f402f-8b3d-48c7-9dfd-62e2b98c54c3\n"
+		},
+		{
+			"key": "scope",
+			"value": "https://intelcloudstg.onmicrosoft.com/idc-api/idc-read"
+		},
+		{
+			"key": "idcorg_name",
+			"value": ""
+		},
+		{
+			"key": "idc_org_name",
+			"value": ""
+		}
+	]
+}
